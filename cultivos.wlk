@@ -10,3 +10,23 @@ class Maiz {
 		return "corn_baby.png"
 	}
 }
+
+class Trigo {
+	method position() {
+		return game.at(1, 1)
+	}
+
+	method image() {
+		return "wheat_0.png"
+	}
+}
+
+class Tomaco {
+	method position() {
+		return game.at(1, 1)
+	}
+
+	method image() {
+		return "tomaco.png"
+	}
+}
