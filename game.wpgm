@@ -12,7 +12,17 @@ program farmville {
 	//  VISUALES
  	game.addVisualCharacter(personaje)
  	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	
+
+
+    const maiz = new Maiz()
+    keyboard.m().onPressDo({ personaje.plantar(maiz)})
+    const trigo = new Trigo()
+    keyboard.m().onPressDo({ personaje.plantar(trigo)})
+    const tomaco = new Tomaco()
+    keyboard.m().onPressDo({ personaje.plantar(tomaco)})
+
+
+
  	//  COMIENZA
 	game.start()
 }
