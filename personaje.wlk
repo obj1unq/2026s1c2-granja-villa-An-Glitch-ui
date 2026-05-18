@@ -104,8 +104,4 @@ object personaje {
   method efectoCosechar() {
     //nada
   }
-
-  method recibirRiego() {
-	  // nada
-  }
 }
