@@ -12,6 +12,10 @@ program farmville {
 	game.height(10)
 	game.width(10)
 	game.ground("ground.png")
+	game.addVisual(new Market(position = game.at(0, 0)))
+	game.addVisual(new Market(position = game.at(0, 9)))
+	game.addVisual(new Market(position = game.at(9, 0)))
+	game.addVisual(new Market(position = game.at(9, 9)))
 
 	//  VISUALES
  	game.addVisual(personaje)
@@ -24,9 +28,9 @@ program farmville {
 	keyboard.right().onPressDo({personaje.mover(derecha)})
 	keyboard.left().onPressDo({personaje.mover(izquierda)})
 
-    keyboard.m().onPressDo({personaje.plantar(new Maiz(position = personaje.position))})
-    keyboard.t().onPressDo({personaje.plantar(new Trigo(position = personaje.position))})
-    keyboard.o().onPressDo({personaje.plantar(new Tomaco(position = personaje.position))})
+    keyboard.m().onPressDo({personaje.plantar(new Maiz(position = personaje.position()))})
+    keyboard.t().onPressDo({personaje.plantar(new Trigo(position = personaje.position()))})
+    keyboard.o().onPressDo({personaje.plantar(new Tomaco(position = personaje.position()))})
 
 	keyboard.r().onPressDo({personaje.regar()})
 
@@ -34,6 +38,14 @@ program farmville {
 
     keyboard.v().onPressDo({personaje.venderCosecha()})
 
+	keyboard.space().onPressDo({
+		game.say(personaje, "Tengo "+ personaje.monedas() +" monedas y "+ personaje.cantDeCosechas() +" plantas para vender.")})
+
+	keyboard.a().onPressDo({personaje.colocarAspersor(new Aspersor(position = personaje.position()))})
+
+ 	//  COMIENZA
+	game.start()
+}
 	keyboard.space().onPressDo({
 		game.say(personaje, "Tengo "+ personaje.monedas() +"monedas y "+ personaje.cosecha().count() +" plantas para vender.")})
 
