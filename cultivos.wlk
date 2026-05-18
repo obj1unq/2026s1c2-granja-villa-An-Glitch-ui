@@ -6,6 +6,8 @@ class Maiz {
 	var property position
 	var property image = "corn_baby.png"
 	const property costoPorVenta = 150
+	const property esMercado = false //¿¿¿¿¿
+
 
 
 	method efectoRegar() {
@@ -33,7 +35,9 @@ class Trigo {
 	const property esCultivo = true
 	var property position
 	var property image = "wheat_0.png"
+	const property esMercado = false //¿¿¿¿¿
 
+	
 	method efectoRegar() {
 	  if (self.etapa() == 0){
 		self.cambiarImage("wheat_1.png")
@@ -81,6 +85,8 @@ class Tomaco {
 	const property esCultivo = true
 	var property position
 	const property costoPorVenta = 80
+	const property esMercado = false //¿¿¿¿¿
+
 
 	method image() {
 		return "tomaco.png"
