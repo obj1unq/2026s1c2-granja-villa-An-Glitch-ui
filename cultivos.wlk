@@ -25,10 +25,6 @@ class Maiz {
 		game.removeVisual(self)
 	  }
 	}
-
-	method recibirRiego() {
-	  self.efectoRegar()
-    }
 }
 
 class Trigo {
@@ -75,10 +71,6 @@ class Trigo {
 		3
 	  }
 	}
-
-	method recibirRiego() {
-	  self.efectoRegar()
-    }
 }
 
 class Tomaco {
@@ -104,8 +96,4 @@ class Tomaco {
 	method efectoCosechar() {
 	  game.removeVisual(self)
 	}
-
-	method recibirRiego() {
-	  self.efectoRegar()
-    }
 }
