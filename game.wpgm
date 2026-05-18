@@ -2,6 +2,8 @@ import wollok.game.*
 import personaje.*
 import cultivos.*
 import direcciones.*
+import cosas.*
+
 
 
 program farmville {
@@ -28,7 +30,14 @@ program farmville {
 
 	keyboard.r().onPressDo({personaje.regar()})
 
+	keyboard.c().onPressDo({personaje.cosechar()})
 
+    keyboard.v().onPressDo({personaje.venderCosecha()})
+
+	keyboard.space().onPressDo({
+		game.say(personaje, "Tengo "+ personaje.monedas() +"monedas y "+ personaje.cosecha().count() +" plantas para vender.")})
+
+	keyboard.a().onPressDo({personaje.colocar(new Aspersor(position = personaje.position()))})
 
  	//  COMIENZA
 	game.start()
