@@ -1,13 +1,18 @@
 import wollok.game.*
 import direcciones.*
+import cosas.*
+
 
 
 object personaje {
   const property esCultivo = false
+  const property esMercado = false
 	var property position = game.center()
 	const property image = "fplayer.png"
-  var property cosecha = []
+  var property cosechas = []
   var property monedas = 0
+  var property eM = new Market(position = self.position()) //¿¿¿¿¿¿¿
+
 
 
   method plantar(cultivo){
@@ -17,8 +22,7 @@ object personaje {
 
   method validarCultivar(){
     if (self.hayCultivoAca()){
-      //game.say(self, "No puedo plantar acá, ya hay algo plantado.")    ¿¿¿
-      self.error("No se puede plantar acá.")
+      self.error("No puedo plantar acá, ya hay algo plantado.")
 		}
 	}
 
@@ -43,29 +47,50 @@ object personaje {
   }
 
   method cosechar() {
-    self.validarCosechar()
-    cosecha = game.getObjectsIn(position).filter({c => c.esCultivo()})    // ???
+    self.validarCosecha()
+    cosechas.add(self.cultivoDeLaPosicionActual())
     game.getObjectsIn(position).forEach({c => c.efectoCosechar()})
   }
 
-  method validarCosechar() {
+  method validarCosecha() {
     if (not self.hayCultivoAca()){
       self.error("No tengo nada para cosechar.")
     }
   }
 
-  method venderCosecha() {
-    monedas += cosecha.forEach({c => c.costoPorVenta()})
-    cosecha = []
+  method cultivoDeLaPosicionActual() {
+    return game.getObjectsIn(position).filter({c => c.esCultivo()}).first()
   }
 
-  method colocar(cosa) {
+  method venderCosecha() {
+    //console.println("MONTO")
+    if (self.hayUnMercadoAca()){
+      monedas += self.costoTotalDeCultivos()
+      cosechas.clear()
+      eM.comprarElMonto(self.costoTotalDeCultivos())
+    }
+  }
+
+  method hayUnMercadoAca() {
+    return game.getObjectsIn(position).any({c => c.esMercado()})
+  }
+
+  method costoTotalDeCultivos() {
+    return cosechas.sum({c => c.costoPorVenta()})
+  }
+
+  method cantDeCosechas() {
+    return cosechas.count({c => c.esCultivo()})
+  }
+
+  method colocarAspersor(cosa) {
     self.validarPosicionVacia()
-    game.addVisual("aspersor")
+    game.addVisual(cosa)
   }
 
   method validarPosicionVacia() {
     if (game.getObjectsIn(position) == 1){   // comparar con 1 porque contaría "solamente" el pj en la posición actual
+      game.say(self, "No puedo colocar un aspersor acá, ya hay uno.")
       self.error("No puedo colocar un aspersor acá.")
     }
   }
