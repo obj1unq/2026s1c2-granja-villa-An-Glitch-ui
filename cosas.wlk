@@ -18,7 +18,7 @@ class Aspersor {
   }
 
   method vecinos() {
-	  return game.getObjectsIn(position).filter({v => self.esLimitrofe(v.position())})
+	  return game.allVisuals().filter({v => self.esLimitrofe(v.position())})
   }
 
   method esLimitrofe(unaPosicion) {
