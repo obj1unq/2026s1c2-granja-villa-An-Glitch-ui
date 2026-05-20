@@ -1,6 +1,10 @@
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import direcciones.*
+import cosas.*
+
+
 
 program farmville {
 	//  CONFIG	
@@ -8,11 +12,34 @@ program farmville {
 	game.height(10)
 	game.width(10)
 	game.ground("ground.png")
+	game.addVisual(new Market(position = game.at(0, 0)))
+	game.addVisual(new Market(position = game.at(0, 9)))
+	game.addVisual(new Market(position = game.at(9, 0)))
+	game.addVisual(new Market(position = game.at(9, 9)))
 
 	//  VISUALES
- 	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	
+ 	game.addVisual(personaje)
+ 	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
+
+    //  ASPERSOR TICK
+
+    //  TECLAS
+    keyboard.up().onPressDo({personaje.mover(arriba)})
+    keyboard.down().onPressDo({personaje.mover(abajo)})
+	keyboard.right().onPressDo({personaje.mover(derecha)})
+	keyboard.left().onPressDo({personaje.mover(izquierda)})
+
+    keyboard.m().onPressDo({personaje.plantar(new Maiz(position = personaje.position()))})
+    keyboard.t().onPressDo({personaje.plantar(new Trigo(position = personaje.position()))})
+    keyboard.o().onPressDo({personaje.plantar(new Tomaco(position = personaje.position()))})
+
+	keyboard.r().onPressDo({personaje.regar()})
+	keyboard.c().onPressDo({personaje.cosechar()})
+    keyboard.v().onPressDo({personaje.venderCosecha()})
+	keyboard.a().onPressDo({personaje.colocarAspersor()})
+	keyboard.space().onPressDo({
+		game.say(personaje, "Tengo "+ personaje.monedas() +" monedas y "+ personaje.cantDeCosechas() +" plantas para vender.")})
+
  	//  COMIENZA
 	game.start()
 }
