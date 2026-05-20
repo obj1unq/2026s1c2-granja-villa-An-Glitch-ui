@@ -11,7 +11,8 @@ object personaje {
 	const property image = "fplayer.png"
   var property cosechas = []
   var property monedas = 0
-  var property eM = new Market(position = self.position()) //¿¿¿¿¿¿¿
+  var property eM = new Market(position = self.position())
+  const property esCosechable = false
 
 
 
@@ -53,9 +54,13 @@ object personaje {
   }
 
   method validarCosecha() {
-    if (not self.hayCultivoAca()){
+    if (not self.hayCultivoAca() && not self.esCultivoCosechable()){
       self.error("No tengo nada para cosechar.")
     }
+  }
+
+  method esCultivoCosechable() {
+    return game.getObjectsIn(position).any({c => c.esCosechable()})
   }
 
   method cultivoDeLaPosicionActual() {
@@ -83,14 +88,18 @@ object personaje {
     return cosechas.count({c => c.esCultivo()})
   }
 
-  method colocarAspersor(cosa) {
+  method colocarAspersor() {
     self.validarPosicionVacia()
-    game.addVisual(cosa)
+    const asp = new Aspersor(position = self.position())
+    game.onTick(1000, "aspersor" + asp.identity(), {asp.tick()})
+    game.addVisual(asp)
   }
 
+
+
   method validarPosicionVacia() {
-    if (game.getObjectsIn(position) == 1){   // comparar con 1 porque contaría "solamente" el pj en la posición actual
-      game.say(self, "No puedo colocar un aspersor acá, ya hay uno.")
+    if (game.getObjectsIn(position).size() != 1){   // comparar con 1 porque contaría "solamente" el pj en la posición actual
+      game.say(self, "No puedo colocar un aspersor acá, ya hay uno. " )
       self.error("No puedo colocar un aspersor acá.")
     }
   }
